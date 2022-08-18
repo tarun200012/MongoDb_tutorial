@@ -9,7 +9,7 @@ const blogSchema= Mongoose.Schema({
     description:{
         type: String,
         required: true,
-        minlength: 100
+        minlength: 10
     },
     author:{
         type: Mongoose.Schema.Types.ObjectId,
@@ -19,4 +19,9 @@ const blogSchema= Mongoose.Schema({
 
 },{timestamps:true});
 
-mudule.exports = Mongoose.model('blog', blogSchema);
+//trigger
+blogSchema.post('save',(doc)=>{
+    console.log("%s blog has been saved",doc.id);
+})
+
+module.exports = Mongoose.model('blog', blogSchema);

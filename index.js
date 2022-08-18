@@ -1,6 +1,8 @@
 const Mongoose = require('mongoose');
 const User= require('./user.js');
+const Blog= require('./blog.js');
 const userQuery= require('./userModelimpl');
+const blogQuery= require('./blogModelimpl');
 const connect = () => {
    return Mongoose.connect('mongodb://localhost:27017/UnacademyMongoDemo');
 }
@@ -12,6 +14,7 @@ console.log('Mongo DB connection setup done!!');
 
 // JUST FOR DEMO
     await User.deleteMany({})
+    await Blog.deleteMany({})
    
 //
 
@@ -19,7 +22,7 @@ console.log('Mongo DB connection setup done!!');
  const user= await User.create({
     firstName: 'Tarun',
     lastName: 'Gupta',
-    email: 'tg@gmail.com'
+    email: 'tg4@gmail.com'
  });
  console.log(user);
  console.log('********');
@@ -33,7 +36,24 @@ console.log('Mongo DB connection setup done!!');
 
  console.log('**********************************');
 
- 
+ const b1 = await Blog.create({
+    title: 'New Blog4',
+    description: 'This is my latest blog please check it out !!!',
+    author: user.id
+    // author: user
+ });    
+ console.log(b1);
+
+//  const b2= await Blog.findById(b1.id).populate('author').select('author').exec();
+//  console.log(b2);
+ const b2= await blogQuery.blogByAuthor(user.id);
+ console.log(b2);
+
+
+
+
+
+
 
 
 })
